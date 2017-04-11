@@ -1,20 +1,87 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game Jump @ por Raphael Giron</title>
-  </head>
+
+    <style>
+    	canvas {
+    		position: absolute;
+    		top: 0px;
+    		bottom: 0px;
+    		left: 0px;
+    		right: 0px;
+    		margin: auto;
+    	}
+    </style>
+
+</head>
 
 
 
-  <body>
+<body>
   	<script>
-  
+  		
+  		var canves, ctx, ALTURA, LARGURA, frames = 0;
+
+  		function main() {
+
+  			ALTURA 	= window.innerHeight;
+  			LARGURA = window.innerWidth;
+
+  			if(LARGURA => 500) {
+
+  				ALTURA	= 600;
+  				LARGURA = 600;
+  			}
+
+  			canvas = document.createElement("canvas");
+  			canvas.width = ALTURA;
+  			canvas.height = LARGURA;
+  			canvas.style.border = "1px solid #ccc";
+
+  			ctx = canvas.getContext("2d");
+
+  			document.body.appendChild(canvas);
+  			document.addEventListener("mousedown", clique);
+
+  			roda();
+  		}
+
+  		function clique(event) {
+
+  			// alert("Ok");
+  		}
+
+  		function roda() {
+
+  			atualiza();
+  			desenha();
+
+  			window.requestAnimationFrame(roda);
+  		}
+
+  		function atualiza() {
+
+  			frames++;
+  		}
+
+  		function desenha() {
+
+  			ctx.fillStyle = "#50beff";
+  			ctx.fillRect(0, 0, LARGURA, ALTURA);
+  		}
+
+
+
+
+  		// Inicializa o game
+  		main();
 
 
 
   	</script>
-  </body>
+</body>
 </html>
