@@ -79,13 +79,13 @@
 
         obstaculos = {
 
-            _obs: [],
+            _barreira: [],
             cores: ["#ffbc1c", "#ff1c1c", "#ff85e1", "#52a7ff", "#78ff5d"],
             tempoInsere: 0,
 
             insere: function() {
 
-                this._obs.push({
+                this._barreira.push({
 
                     x: LARGURA,
                     largura: 30 + Math.floor(21 * Math.random()),
@@ -93,7 +93,7 @@
                     cor: this.cores[Math.floor(this.cores.length * Math.random())]
                 });
 
-                this.tempoInsere = 30 + Math.floor(21 + Math.random());
+                this.tempoInsere = 30 + Math.floor(21 * Math.random());
             },
 
             atualiza: function() {
@@ -104,17 +104,16 @@
                     this.tempoInsere--;
                 }
 
-                length = this._obs.length;
+                length = this._barreira.length;
 
                 for(var i = 0; i < length; i++) {
 
-                    var obs = this._obs[i];
+                    this._barreira[i].x -= velocidade;
 
-                    obs.x -= velocidade;
+                    if(this._barreira[i].x <= -this._barreira[i].largura) {
 
-                    if(obs.x <= -obs.largura) {
-
-                        this._obs.splice(i, 1);
+                        // Apago item do array assim que sair da tela
+                        this._barreira.splice(i, 1);
                         length --;
                         i --;
                     }
@@ -123,13 +122,12 @@
 
             desenha: function() {
 
-                length = this._obs.length;
+                length = this._barreira.length;
 
                 for (var i = 0; i < length; i++) {
                     
-                    var obs = this._obs[i];
-                    ctx.fillStyle = obs.cor;
-                    ctx.fillRect(obs.x, chao.y - obs.altura, obs.largura, obs.altura);
+                    ctx.fillStyle = this._barreira[i].cor;
+                    ctx.fillRect(this._barreira[i].x, chao.y - this._barreira[i].altura, this._barreira[i].largura, this._barreira[i].altura);
                 }
             }
         };
