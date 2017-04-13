@@ -27,6 +27,7 @@
   		var canves, ctx, ALTURA, LARGURA, frames = 0, maxPulos = 3, velocidade = 6,
 
   		chao = {
+
   			y: 550,
   			altura: 50,
   			cor: "#e8da78",
@@ -39,6 +40,7 @@
   		},
 
   		bloco = {
+
   			x: 50,
   			y: 0,
   			altura: 50,
@@ -99,8 +101,10 @@
             atualiza: function() {
 
                 if(this.tempoInsere == 0) {
+
                     this.insere();
                 } else {
+
                     this.tempoInsere--;
                 }
 
