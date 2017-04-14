@@ -24,7 +24,14 @@
 <body>
   	<script>
   		
-  		var canves, ctx, ALTURA, LARGURA, frames = 0, maxPulos = 3, velocidade = 6,
+  		var canves, ctx, ALTURA, LARGURA, frames = 0, maxPulos = 3, velocidade = 6, estadoAtual,
+
+        estados = {
+
+            jogar: 0,
+            jogando: 1,
+            perdeu: 2
+        },
 
   		chao = {
 
@@ -157,10 +164,20 @@
   			document.body.appendChild(canvas);
   			document.addEventListener("mousedown", clique);
 
+            estadoAtual = estados.jogar;
+
   			roda();
   		}
 
   		function clique(event) {
+
+            if(estadoAtual == estados.jogando) {
+                bloco.pula();
+            } else if(estadoAtual == estados.jogar) {
+                estadoAtual = estados.jogando;
+            } else if(estadoAtual == estados.perdeu) {
+                estadoAtual = estados.jogar;
+            }
 
   			bloco.pula();
   		}
@@ -178,7 +195,11 @@
   			frames++;
 
             bloco.atualiza();
-  			obstaculos.atualiza();
+            
+            if(estadoAtual == estados.jogando) {
+
+                obstaculos.atualiza();   
+            }
   		}
 
   		function desenha() {
@@ -186,8 +207,17 @@
   			ctx.fillStyle = "#80daff";
   			ctx.fillRect(0, 0, LARGURA, ALTURA);
 
+            if(estadoAtual == estados.jogar) {
+                ctx.fillStyle = "green";
+                ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
+            } else if(estadoAtual == estados.perdeu) {
+                ctx.fillStyle = "red";
+                ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
+            } else if(estadoAtual == estados.jogando) {
+                obstaculos.desenha();
+            }
+
   			chao.desenha();
-            obstaculos.desenha();
   			bloco.desenha();
   		}
 
