@@ -28,9 +28,9 @@
 
         estados = {
 
-            jogar: 0,
-            jogando: 1,
-            perdeu: 2
+            jogar: 0, // Trocar para play
+            jogando: 1, // Trocar para playing
+            perdeu: 2 // Trocar para gameover
         },
 
   		chao = {
@@ -171,15 +171,29 @@
 
   		function clique(event) {
 
-            if(estadoAtual == estados.jogando) {
-                bloco.pula();
-            } else if(estadoAtual == estados.jogar) {
-                estadoAtual = estados.jogando;
-            } else if(estadoAtual == estados.perdeu) {
-                estadoAtual = estados.jogar;
-            }
+            // Trocar talvez por switch -- preciso escolher um
+            // switch(estadoAtual) {
+            //     case estados.jogando:
+            //         bloco.pula();
+            //         break;
+            //     case estados.jogar:
+            //         estadoAtual = estados.jogando;
+            //         break;
+            //     case estados.perdeu:
+            //         estadoAtual = estados.jogar;
+            // }
 
-  			bloco.pula();
+            if(estadoAtual == estados.jogando) bloco.pula();
+            if(estadoAtual == estados.jogar) estadoAtual = estados.jogando;
+            if(estadoAtual == estados.perdeu) estadoAtual = estados.jogar;
+            
+            // if(estadoAtual == estados.jogando) {
+            //     bloco.pula();
+            // } else if(estadoAtual == estados.jogar) {
+            //     estadoAtual = estados.jogando;
+            // } else if(estadoAtual == estados.perdeu) {
+            //     estadoAtual = estados.jogar;
+            // }
   		}
 
   		function roda() {
