@@ -63,10 +63,11 @@
   				this.velocidade += this.gravidade;
   				this.y += this.velocidade;
 
-  				if(this.y > chao.y - this.altura) {
+  				if(this.y > chao.y - this.altura && estadoAtual != estados.perdeu) {
 
   					this.y = chao.y - this.altura;
   					this.qtdPulos = 0;
+                    this.velocidade = 0;
   				}
   			},
 
@@ -121,6 +122,13 @@
 
                     this._barreira[i].x -= velocidade;
 
+                    if(bloco.x < this._barreira[i].x + this._barreira[i].largura &&
+                       bloco.x + bloco.largura >= this._barreira[i].x &&
+                       bloco.y + bloco.altura >= chao.y - this._barreira[i].altura) {
+
+                        estadoAtual = estados.perdeu;   
+                    }
+
                     if(this._barreira[i].x <= -this._barreira[i].largura) {
 
                         // Apago item do array assim que sair da tela
@@ -129,6 +137,11 @@
                         i --;
                     }
                 }
+            },
+
+            limpa: function() {
+
+                this._barreira = [];
             },
 
             desenha: function() {
@@ -172,27 +185,31 @@
   		function clique(event) {
 
             // Trocar talvez por switch -- preciso escolher um
-            // switch(estadoAtual) {
-            //     case estados.jogando:
-            //         bloco.pula();
-            //         break;
-            //     case estados.jogar:
-            //         estadoAtual = estados.jogando;
-            //         break;
-            //     case estados.perdeu:
-            //         estadoAtual = estados.jogar;
-            // }
+            switch(estadoAtual) {
+                case estados.jogando:
+                    bloco.pula();
+                    break;
+                case estados.jogar:
+                    estadoAtual = estados.jogando;
+                    break;
+                case estados.perdeu:
+                    estadoAtual = estados.jogar;
+                    bloco.velocidade = 0;
+                    bloco.y = 0;
+            }
 
-            if(estadoAtual == estados.jogando) bloco.pula();
-            if(estadoAtual == estados.jogar) estadoAtual = estados.jogando;
-            if(estadoAtual == estados.perdeu) estadoAtual = estados.jogar;
+            // if(estadoAtual == estados.jogando) bloco.pula();
+            // if(estadoAtual == estados.jogar) estadoAtual = estados.jogando;
+            // if(estadoAtual == estados.perdeu) estadoAtual = estados.jogar;
             
             // if(estadoAtual == estados.jogando) {
             //     bloco.pula();
             // } else if(estadoAtual == estados.jogar) {
             //     estadoAtual = estados.jogando;
-            // } else if(estadoAtual == estados.perdeu) {
+            // } else if(estadoAtual == estados.perdeu && bloco.y >= 2 * ALTURA) {
             //     estadoAtual = estados.jogar;
+            //     bloco.velocidade = 0;
+            //     bloco.y = 0;
             // }
   		}
 
@@ -214,6 +231,8 @@
 
                 obstaculos.atualiza();   
             }
+
+            if(estadoAtual == estados.perdeu) obstaculos.limpa();
   		}
 
   		function desenha() {
