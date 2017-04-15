@@ -189,7 +189,16 @@
   			ctx = canvas.getContext("2d");
 
   			document.body.appendChild(canvas);
-  			document.addEventListener("mousedown", clique);
+
+            document.addEventListener("mousedown", clique);
+            document.body.onkeyup = function(e) {
+                
+                // https://www.cambiaresearch.com/articles/15/javascript-char-codes-key-codes
+                if(e.keyCode === 32 || e.keyCode === 38 || e.keyCode === 87) {
+
+                    clique();
+                }
+            }
 
             estadoAtual = estados.jogar;
 
