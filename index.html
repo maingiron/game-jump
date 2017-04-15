@@ -57,6 +57,7 @@
   			velocidade: 0,
   			forcaDoPulo: 23.6,
   			qtdPulos: 0,
+            score: 0,
 
   			atualiza: function() {
 
@@ -82,8 +83,9 @@
 
             reset: function() {
 
-                bloco.velocidade = 0;
-                bloco.y = 0;
+                this.velocidade = 0;
+                this.y = 0;
+                this.score = 0;
             },
 
   			desenha: function() {
@@ -134,6 +136,11 @@
                        bloco.y + bloco.altura >= chao.y - this._barreira[i].altura) {
 
                         estadoAtual = estados.perdeu;   
+                    }
+
+                    if(this._barreira[i].x == 0) {
+
+                        bloco.score++;
                     }
 
                     if(this._barreira[i].x <= -this._barreira[i].largura) {
@@ -245,12 +252,31 @@
   			ctx.fillStyle = "#80daff";
   			ctx.fillRect(0, 0, LARGURA, ALTURA);
 
+            ctx.fillStyle = "#fff";
+            ctx.font = "50px Arial";
+            ctx.fillText(bloco.score, 30, 68);
+
             if(estadoAtual == estados.jogar) {
                 ctx.fillStyle = "green";
                 ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
             } else if(estadoAtual == estados.perdeu) {
                 ctx.fillStyle = "red";
                 ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
+
+                ctx.save();
+                ctx.translate(LARGURA / 2, ALTURA / 2);
+                ctx.fillStyle = "#fff";
+                
+                if(bloco.score < 10) {
+                    ctx.fillText(bloco.score, -13, 19);
+                } else if(bloco.score >= 10 && bloco.score < 100) {
+                    ctx.fillText(bloco.score, -26, 19);
+                } else {
+                    ctx.fillText(bloco.score, -39, 19);
+                }
+                
+
+                ctx.restore();
             } else if(estadoAtual == estados.jogando) {
                 obstaculos.desenha();
             }
