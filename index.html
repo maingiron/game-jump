@@ -28,7 +28,7 @@
 
         estados = {
 
-            jogar: 0, // Trocar para play
+            jogar: 0, // Trocar para start
             jogando: 1, // Trocar para playing
             perdeu: 2 // Trocar para gameover
         },
@@ -162,7 +162,7 @@
 
                 length = this._barreira.length;
 
-                for (var i = 0; i < length; i++) {
+                for(var i = 0; i < length; i++) {
                     
                     ctx.fillStyle = this._barreira[i].cor;
                     ctx.fillRect(this._barreira[i].x, chao.y - this._barreira[i].altura, this._barreira[i].largura, this._barreira[i].altura);
@@ -198,33 +198,20 @@
 
   		function clique(event) {
 
-            // Trocar talvez por switch -- preciso escolher um
             switch(estadoAtual) {
                 case estados.jogando:
                     bloco.pula();
                     break;
+
                 case estados.jogar:
                     estadoAtual = estados.jogando;
                     break;
+
                 case estados.perdeu:
                     estadoAtual = estados.jogar;
                     obstaculos.limpa();
                     bloco.reset();
             }
-
-            // if(estadoAtual == estados.jogando) bloco.pula();
-            // if(estadoAtual == estados.jogar) estadoAtual = estados.jogando;
-            // if(estadoAtual == estados.perdeu) estadoAtual = estados.jogar;
-            
-            // if(estadoAtual == estados.jogando) {
-            //     bloco.pula();
-            // } else if(estadoAtual == estados.jogar) {
-            //     estadoAtual = estados.jogando;
-            // } else if(estadoAtual == estados.perdeu && bloco.y >= 2 * ALTURA) {
-            //     estadoAtual = estados.jogar;
-            //     bloco.velocidade = 0;
-            //     bloco.y = 0;
-            // }
   		}
 
   		function roda() {
@@ -256,29 +243,36 @@
             ctx.font = "50px Arial";
             ctx.fillText(bloco.score, 30, 68);
 
-            if(estadoAtual == estados.jogar) {
-                ctx.fillStyle = "green";
-                ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
-            } else if(estadoAtual == estados.perdeu) {
-                ctx.fillStyle = "red";
-                ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
+            switch(estadoAtual) {
+                case estados.jogar:
+                    ctx.fillStyle = "green";
+                    ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
+                    break;
 
-                ctx.save();
-                ctx.translate(LARGURA / 2, ALTURA / 2);
-                ctx.fillStyle = "#fff";
-                
-                if(bloco.score < 10) {
-                    ctx.fillText(bloco.score, -13, 19);
-                } else if(bloco.score >= 10 && bloco.score < 100) {
-                    ctx.fillText(bloco.score, -26, 19);
-                } else {
-                    ctx.fillText(bloco.score, -39, 19);
-                }
-                
+                case estados.perdeu:
+                    ctx.fillStyle = "red";
+                    ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
 
-                ctx.restore();
-            } else if(estadoAtual == estados.jogando) {
-                obstaculos.desenha();
+                    ctx.save();
+                    ctx.translate(LARGURA / 2, ALTURA / 2);
+                    ctx.fillStyle = "#fff";
+                    
+                    if(bloco.score < 10) {
+                        
+                        ctx.fillText(bloco.score, -13, 19);
+                    } else if(bloco.score >= 10 && bloco.score < 100) {
+                        
+                        ctx.fillText(bloco.score, -26, 19);
+                    } else {
+                        
+                        ctx.fillText(bloco.score, -39, 19);
+                    }
+                    
+                    ctx.restore();
+                    break;
+
+                case estados.jogando:
+                    obstaculos.desenha();
             }
 
   			chao.desenha();
