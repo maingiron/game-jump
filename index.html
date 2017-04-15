@@ -80,6 +80,12 @@
   				}
   			},
 
+            reset: function() {
+
+                bloco.velocidade = 0;
+                bloco.y = 0;
+            },
+
   			desenha: function() {
 
   				ctx.fillStyle = this.cor;
@@ -98,7 +104,8 @@
                 this._barreira.push({
 
                     x: LARGURA,
-                    largura: 30 + Math.floor(21 * Math.random()),
+                    // largura: 30 + Math.floor(21 * Math.random()),
+                    largura: 50,
                     altura: 30 + Math.floor(120 * Math.random()),
                     cor: this.cores[Math.floor(this.cores.length * Math.random())]
                 });
@@ -194,8 +201,8 @@
                     break;
                 case estados.perdeu:
                     estadoAtual = estados.jogar;
-                    bloco.velocidade = 0;
-                    bloco.y = 0;
+                    obstaculos.limpa();
+                    bloco.reset();
             }
 
             // if(estadoAtual == estados.jogando) bloco.pula();
@@ -231,8 +238,6 @@
 
                 obstaculos.atualiza();   
             }
-
-            if(estadoAtual == estados.perdeu) obstaculos.limpa();
   		}
 
   		function desenha() {
