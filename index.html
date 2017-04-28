@@ -76,11 +76,13 @@
   			forcaDoPulo: 23.6,
   			qtdPulos: 0,
             score: 0,
+            rotacao: 0,
 
   			atualiza: function() {
 
   				this.velocidade += this.gravidade;
   				this.y += this.velocidade;
+                this.rotacao += Math.PI / 180 * velocidade;
 
   				if(this.y > chao.y - this.altura && estadoAtual != estados.perdeu) {
 
@@ -118,7 +120,12 @@
   				// ctx.fillStyle = this.cor;
   				// ctx.fillRect(this.x, this.y, this.altura, this.largura);
 
-                spriteBoneco.desenha(this.x, this.y);
+                // Realiza a rotação do boneco.
+                ctx.save();
+                ctx.translate(this.x + this.largura / 2, this.y + this.altura / 2);
+                ctx.rotate(this.rotacao);
+                spriteBoneco.desenha(-this.largura / 2, - this.altura / 2);
+                ctx.restore();
   			}
   		},
 
