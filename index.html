@@ -26,7 +26,7 @@
 <body>
   	<script>
   		
-  		var canves, ctx, ALTURA, LARGURA, maxPulos = 3, velocidade = 6, estadoAtual, record, img,
+  		var canves, ctx, ALTURA, LARGURA, maxPulos = 30, velocidade = 6, estadoAtual, record, img,
 
         // frames = 0,
 
@@ -320,7 +320,7 @@
                 spriteRecord.desenha(LARGURA / 2 - spriteRecord.largura / 2, ALTURA / 2 + perdeu.altura / 2 - spriteRecord.altura / 2 - 25);
 
                 // ctx.fillStyle = "#fff";
-                ctx.fillText(bloco.score, 375, 390);
+                // ctx.fillText(bloco.score, 375, 390);
 
                 if(bloco.score > record) {
 
