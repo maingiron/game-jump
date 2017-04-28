@@ -26,7 +26,9 @@
 <body>
   	<script>
   		
-  		var canves, ctx, ALTURA, LARGURA, frames = 0, maxPulos = 3, velocidade = 6, estadoAtual, record, img,
+  		var canves, ctx, ALTURA, LARGURA, maxPulos = 3, velocidade = 6, estadoAtual, record, img,
+
+        // frames = 0,
 
         estados = {
 
@@ -38,13 +40,27 @@
   		chao = {
 
   			y: 550,
+            x: 0,
   			altura: 50,
-  			cor: "#e8da78",
+  			// cor: "#e8da78",
+
+            atualiza: function() {
+
+                this.x -= velocidade;
+
+                if(this.x <= -30) {
+
+                    this.x = 0;
+                }
+            },
 
   			desenha: function() {
 
-  				ctx.fillStyle = this.cor;
-  				ctx.fillRect(0, this.y, LARGURA, this.altura);
+  				// ctx.fillStyle = this.cor;
+  				// ctx.fillRect(0, this.y, LARGURA, this.altura);
+
+                spriteChao.desenha(this.x, this.y);
+                spriteChao.desenha(this.x + spriteChao.largura, this.y);
   			}
   		},
 
@@ -54,7 +70,7 @@
   			y: 0,
   			altura: spriteBoneco.altura,
   			largura: spriteBoneco.largura,
-  			cor: "#ff9239",
+  			// cor: "#ff9239",
   			gravidade: 1.6,
   			velocidade: 0,
   			forcaDoPulo: 23.6,
@@ -254,14 +270,16 @@
 
   		function atualiza() {
 
-  			frames++;
+  			// frames++;
 
-            bloco.atualiza();
-            
             if(estadoAtual == estados.jogando) {
 
                 obstaculos.atualiza();   
             }
+
+            chao.atualiza();
+
+            bloco.atualiza();
   		}
 
   		function desenha() {
