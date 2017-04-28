@@ -300,54 +300,38 @@
             ctx.font = "50px Arial";
             ctx.fillText(bloco.score, 30, 68);
 
-            switch(estadoAtual) {
-                case estados.jogar:
-                    ctx.fillStyle = "green";
-                    ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
-                    break;
+            if(estadoAtual == estados.jogando) {
 
-                case estados.perdeu:
-                    ctx.fillStyle = "red";
-                    ctx.fillRect(LARGURA / 2 -50, ALTURA / 2 -50, 100, 100);
-
-                    ctx.save();
-                    ctx.translate(LARGURA / 2, ALTURA / 2);
-                    ctx.fillStyle = "#fff";
-
-                    if(bloco.score > record) {
-
-                        ctx.fillText("Novo Record!", -150, -65);
-                    } else if(record < 10) {
-
-                        ctx.fillText("Record " + record, -99, -65);
-                    } else if(record >= 10 && record < 100) {
-
-                        ctx.fillText("Record " + record, -112, -65);
-                    } else {
-
-                        ctx.fillText("Record " + record, -125, -65);
-                    }
-                    
-                    if(bloco.score < 10) {
-                        
-                        ctx.fillText(bloco.score, -13, 19);
-                    } else if(bloco.score >= 10 && bloco.score < 100) {
-                        
-                        ctx.fillText(bloco.score, -26, 19);
-                    } else {
-                        
-                        ctx.fillText(bloco.score, -39, 19);
-                    }
-                    
-                    ctx.restore();
-                    break;
-
-                case estados.jogando:
-                    obstaculos.desenha();
+                obstaculos.desenha();
             }
 
-  			chao.desenha();
-  			bloco.desenha();
+            chao.desenha();
+            bloco.desenha();
+
+            if(estadoAtual == estados.jogar) {
+
+                jogar.desenha(LARGURA / 2 - jogar.largura / 2, ALTURA / 2 - jogar.altura / 2);
+            }
+
+            if(estadoAtual == estados.perdeu) {
+
+                perdeu.desenha(LARGURA / 2 - perdeu.largura / 2, ALTURA / 2 - perdeu.altura / 2 - spriteRecord.altura / 2);
+
+                spriteRecord.desenha(LARGURA / 2 - spriteRecord.largura / 2, ALTURA / 2 + perdeu.altura / 2 - spriteRecord.altura / 2 - 25);
+
+                // ctx.fillStyle = "#fff";
+                ctx.fillText(bloco.score, 375, 390);
+
+                if(bloco.score > record) {
+
+                    novo.desenha(LARGURA / 2 - 180, ALTURA / 2 + 30);
+                    ctx.fillText(bloco.score, 420, 470);
+                } else {
+
+                    ctx.fillText(record, 415, 470);
+                }
+            }
+  			
   		}
 
 
