@@ -26,7 +26,38 @@
 <body>
   	<script>
   		
-  		var canves, ctx, ALTURA, LARGURA, maxPulos = 5, velocidade = 6, estadoAtual, record, img,
+  		var canves, ctx, ALTURA, LARGURA, maxPulos = 30, velocidade = 6, estadoAtual, record, img,
+
+        pontosParaNovaFase = [5, 10, 15, 20],
+        faseAtual = 0,
+
+        labelNovaFase = {
+
+            texto: "",
+            opacidade: 0,
+
+            fadeIn: function(segundo) {
+
+                var idFadeIn = setInterval(function() {
+
+                    if(labelNovaFase.opacidade < 1) 
+                        labelNovaFase.opacidade += 0.01;
+                    else
+                        clearInterval(idFadeIn);
+                }, 10 * segundo);
+            },
+
+            fadeOut: function(segundo) {
+
+                var idFadeOut = setInterval(function() {
+
+                    if(labelNovaFase.opacidade > 0)
+                        labelNovaFase.opacidade -= 0.01;
+                    else
+                        clearInterval(idFadeOut);
+                }, 10 * segundo);                
+            }
+        },
 
         // frames = 0,
 
@@ -50,7 +81,7 @@
 
                 if(this.x <= -30) {
 
-                    this.x = 0;
+                    this.x += 30;
                 }
             },
 
@@ -113,6 +144,10 @@
                 }
 
                 this.score = 0;
+
+                velocidade = 6;
+                faseAtual = 0;
+                this.gravidade = 1.6;
             },
 
   			desenha: function() {
@@ -129,9 +164,13 @@
   			}
   		},
 
+
+
+
         obstaculos = {
 
             _barreira: [],
+            _scored: false,
             cores: ["#ffbc1c", "#ff1c1c", "#ff85e1", "#52a7ff", "#78ff5d"],
             tempoInsere: 0,
 
@@ -172,9 +211,13 @@
                         estadoAtual = estados.perdeu;   
                     }
 
-                    if(this._barreira[i].x == 0) {
+                    if(this._barreira[i].x <= 0 && !this._barreira[i]._scored) {
 
                         bloco.score++;
+                        this._barreira[i]._scored = true;
+
+                        if(faseAtual < pontosParaNovaFase.length && bloco.score == pontosParaNovaFase[faseAtual])
+                            mudarFase();
                     }
 
                     if(this._barreira[i].x <= -this._barreira[i].largura) {
@@ -203,6 +246,25 @@
                 }
             }
         };
+
+
+        function mudarFase() {
+
+            velocidade++;
+            faseAtual++;
+
+            if(faseAtual == 4)
+                bloco.gravidade *= 0.6;
+
+            labelNovaFase.texto = "Level " + faseAtual;
+            labelNovaFase.fadeIn(0.4);
+
+            setTimeout(function() {
+
+                labelNovaFase.fadeOut(0.4);
+            }, 800);
+        }
+
 
   		function main() {
 
@@ -299,6 +361,8 @@
             ctx.fillStyle = "#fff";
             ctx.font = "50px Arial";
             ctx.fillText(bloco.score, 30, 68);
+            ctx.fillStyle = "rgba(0, 0, 0, " + labelNovaFase.opacidade + ")"
+            ctx.fillText(labelNovaFase.texto, canvas.width / 2 - ctx.measureText(labelNovaFase.texto).width / 2, canvas.height / 3);
 
             if(estadoAtual == estados.jogando) {
 
