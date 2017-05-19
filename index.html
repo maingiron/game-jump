@@ -267,6 +267,9 @@
 
                 labelNovaFase.fadeOut(0.4);
             }, 800);
+
+            var sound = new Audio("sound/level.wav");
+            sound.play();
         }
 
 
@@ -319,6 +322,9 @@
 
             switch(estadoAtual) {
                 case estados.jogando:
+                    var sound = new Audio("sound/jump.wav");
+                    sound.play();
+                    
                     bloco.pula();
                     break;
 
@@ -367,7 +373,8 @@
             ctx.fillText(bloco.score, 30, 68);
             ctx.fillStyle = "rgba(0, 0, 0, " + labelNovaFase.opacidade + ")"
             ctx.fillText(labelNovaFase.texto, canvas.width / 2 - ctx.measureText(labelNovaFase.texto).width / 2, canvas.height / 3);
-
+            ctx.fillStyle = "#fff";
+            
             if(estadoAtual == estados.jogando) {
 
                 obstaculos.desenha();
@@ -395,7 +402,7 @@
                     novo.desenha(LARGURA / 2 - 180, ALTURA / 2 + 30);
                     ctx.fillText(bloco.score, 420, 470);
                 } else {
-
+                    
                     ctx.fillText(record, 415, 470);
                 }
             }
