@@ -9,16 +9,27 @@ canvas {
   left: 0px;
   right: 0px;
   margin: auto;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 21px 1px rgba(173,173,173,1);
+  -moz-box-shadow: 0px 0px 21px 1px rgba(173,173,173,1);
+  box-shadow: 0px 0px 21px 1px rgba(173,173,173,1);
 }
 
-.link {
+.description {
   position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  padding: 1rem;
+  top: 7%;
+  left: 1.7%;
+  width: 23%;
+  padding: 10px;
+  border-radius: 5px;
+  -webkit-box-shadow: 0px 0px 21px 1px rgba(173,173,173,1);
+  -moz-box-shadow: 0px 0px 21px 1px rgba(173,173,173,1);
+  box-shadow: 0px 0px 21px 1px rgba(173,173,173,1);
+  font-family: 'Raleway', sans-serif;
+  color: #f2f2f2;
+  background-color: #34a853;
 
-  /* Disable text selection highlighting */
+    /* Disable text selection highlighting */
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
   -khtml-user-select: none; /* Konqueror HTML */
@@ -27,13 +38,23 @@ canvas {
   user-select: none; /* Non-prefixed version, currently
                         supported by Chrome and Opera */
 }
-.link a {
+
+.description-welcome {
+  border-bottom: 2px solid #f2f2f2;
+}
+h1 {
+  text-align: center;
+}
+
+.description a {
+  width: 100%;
+  padding-top: 15px;
+  text-align: center;
   float: right;
-  padding: 5px;
-  color: #221f1f;
+  color: #f2f2f2;
   text-decoration: none;
   font-size: 20px;
 }
-.link a:hover {
+.description a:hover {
   color: #ef615c;
 }
