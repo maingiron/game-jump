@@ -1,7 +1,7 @@
 var canves, ctx, ALTURA, LARGURA, maxPulos = 5, velocidade = 6, estadoAtual, record, img,
 pontosParaNovaFase = [7, 14, 21, 28],
 faseAtual = 0,
-soundBackground = new Audio("sound/overworld.mp3"),
+soundBackground = new Audio("assets/sound/overworld.mp3"),
 
 labelNovaFase = {
   texto: "",
@@ -212,7 +212,7 @@ function mudarFase() {
     labelNovaFase.fadeOut(0.4);
   }, 800);
 
-  var sound = new Audio("sound/level.wav");
+  var sound = new Audio("assets/sound/level.wav");
   sound.play();
 }
 
@@ -253,7 +253,7 @@ function main() {
     record = 0;
 
   img = new Image();
-  img.src="i/sheet.png";
+  img.src="assets/i/sheet.png";
 
   roda();
 }
@@ -265,7 +265,7 @@ function clique(event) {
 
   switch(estadoAtual) {
     case estados.jogando:
-      var sound = new Audio("sound/jump.wav");
+      var sound = new Audio("assets/sound/jump.wav");
       sound.play();
       bloco.pula();
       break;
